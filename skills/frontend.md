@@ -76,10 +76,57 @@ export function DashboardPage({ title, defaultDateRange }: DashboardPageProps) {
 - Form inputs need associated `<label>` elements.
 - Color contrast must meet WCAG AA (4.5:1 for text).
 
+### Data Fetching Pattern
+Always use React Query. Never use `useEffect` + `fetch`.
+
+```tsx
+import { useQuery } from '@tanstack/react-query';
+import { getItems } from '../lib/api';
+
+export function ItemList() {
+  const { data, isLoading, error } = useQuery({
+    queryKey: ['items'],
+    queryFn: getItems,
+    staleTime: 5 * 60 * 1000, // 5 minutes
+  });
+
+  if (isLoading) return <LoadingSkeleton />;
+  if (error) return <ErrorMessage message="Failed to load items" onRetry={() => {}} />;
+  if (!data?.length) return <EmptyState message="No items found" />;
+
+  return <ul>{data.map(item => <ItemCard key={item.id} item={item} />)}</ul>;
+}
+```
+
+### Loading, Error, and Empty States
+Every data-connected component must handle all three states:
+
+```tsx
+// Loading: Show skeleton UI, not a spinner
+if (isLoading) return <div className="animate-pulse bg-gray-200 rounded h-40" />;
+
+// Error: User-friendly message with retry
+if (error) return (
+  <div className="text-center p-6">
+    <p className="text-red-500">Something went wrong</p>
+    <button onClick={() => refetch()} className="mt-2 text-sm underline">Try again</button>
+  </div>
+);
+
+// Empty: Helpful message, not a blank page
+if (!data?.length) return <p className="text-gray-400 text-center p-6">No results found</p>;
+```
+
+### Form Handling
+- Use controlled components with `useState` for simple forms.
+- Use React Hook Form for complex forms with validation.
+- Validate on blur and on submit. Show inline error messages.
+- Disable submit button during API calls. Show loading indicator.
+
 ### Error Handling
 - Every data-fetching component must handle: loading, error, and empty states.
 - Use error boundaries for unexpected runtime errors.
-- Display user-friendly error messages — never show raw error objects.
+- Display user-friendly error messages. Never show raw error objects.
 - Provide retry mechanisms for failed API calls (React Query handles this by default).
 
 ### File Organization
