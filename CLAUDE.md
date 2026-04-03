@@ -107,24 +107,33 @@ Separate each group with a blank line.
 ## 6. What NOT to Do
 
 - **No Axios.** Security risk (supply chain compromise). Use native `fetch` wrapped in `/lib/api.ts`.
-- **No Redux.** React Query + Context is sufficient for our use cases.
-- **No hardcoded URLs.** All URLs come from environment variables.
-- **No `.env` files committed.** Use `.env.example` with placeholder values.
-- **No inline styles.** Use Tailwind classes.
+- **No Redux, Zustand, or MobX.** React Query + Context is sufficient for our use cases.
+- **No hardcoded URLs.** All URLs come from environment variables via `import.meta.env`.
+- **No `.env` files committed.** Use `.env.example` with placeholder values. Add `.env*` to `.gitignore`.
+- **No inline styles.** Use Tailwind classes exclusively.
 - **No `console.log` in production code.** Remove before PR or use a proper logger.
-- **No `any` type in TypeScript.** Ever.
-- **No unused imports or variables.** ESLint will catch these — fix them.
-- **No magic numbers.** Extract to named constants.
+- **No `any` type in TypeScript.** Use `unknown` and narrow with type guards if the type is truly unknown.
+- **No unused imports or variables.** ESLint will catch these. Fix them, do not suppress.
+- **No magic numbers or strings.** Extract to named constants in `/constants/`.
 - **No direct DOM manipulation.** Use React refs if you must interact with DOM.
+- **No `useEffect` for data fetching.** That is React Query's job.
+- **No class components.** Functional components with hooks only.
+- **No copy-pasting API URLs into components.** All API calls go through `/lib/api.ts`.
+- **No skipping the self-review step.** Claude must review its own output before PR creation.
+- **No merging without CI passing.** SonarQube, lint, type check, tests, and build must all pass.
 
 ## 7. Testing Requirements
 
 - Test cases are mandatory for all components and utility functions.
 - Minimum coverage threshold: 80%.
-- Use React Testing Library — test behavior, not implementation details.
+- Use React Testing Library. Test user-visible behavior, not implementation details.
+- Use MSW (Mock Service Worker) for API mocking. Never mock `fetch` directly.
 - Test file naming: `ComponentName.test.tsx` or `utilName.test.ts`
+- Colocate tests with source: `StatCard.tsx` and `StatCard.test.tsx` in the same directory.
+- Every data-fetching component must have tests for: loading state, error state, success state, empty state.
 - Run `npm test` before committing. All tests must pass.
 - Run `npm run test:coverage` before creating a PR.
+- See `skills/testing.md` for detailed patterns and examples.
 
 ## 8. API Integration Rules
 
