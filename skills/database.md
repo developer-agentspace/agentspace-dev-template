@@ -32,10 +32,37 @@ Use `deleted_at` (nullable timestamp) instead of hard deletes. Query with `WHERE
 - Use composite indexes for queries that filter on multiple columns together.
 - Don't over-index — each index slows down writes.
 
+## Query Patterns
+
+### Pagination
+Use `LIMIT` + `OFFSET` for simple pagination. For large datasets, use cursor-based pagination with `WHERE id > :last_id LIMIT :size`.
+
+### Filtering
+Build WHERE clauses dynamically. Never concatenate user input into SQL strings. Use parameterized queries.
+
+### Common Query Template
+```sql
+SELECT sb.id, sb.sb_number, sb.sb_date, e.name AS exporter_name
+FROM shipping_bills sb
+JOIN exporters e ON e.id = sb.exporter_id
+WHERE sb.deleted_at IS NULL
+  AND sb.sb_date BETWEEN :start_date AND :end_date
+ORDER BY sb.sb_date DESC
+LIMIT :page_size OFFSET :offset;
+```
+
+## Data Types
+- Dates: `DATE` or `TIMESTAMP WITH TIME ZONE`
+- Money/currency: `NUMERIC(15,2)`. Never use `FLOAT` for money.
+- Text: `VARCHAR(n)` with explicit length for constrained fields, `TEXT` for free-form.
+- Boolean: `BOOLEAN`, default `FALSE`.
+- Enums: Use PostgreSQL `ENUM` type or a separate lookup table for frequently changing values.
+
 ## Migration Patterns
 - One migration file per schema change.
-- Migrations are forward-only in production — never edit a deployed migration.
+- Migrations are forward-only in production. Never edit a deployed migration.
 - Name migrations descriptively: `001_create_users_table.sql`, `002_add_email_to_users.sql`
+- Always include a `DOWN` migration for rollback during development.
 
 <!-- ==========================================================
      PROJECT-SPECIFIC SECTION: Fill this when starting a new project
