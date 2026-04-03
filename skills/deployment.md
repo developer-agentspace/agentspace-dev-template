@@ -24,9 +24,31 @@ Before merging any PR:
 ## Docker Configuration
 - Use multi-stage builds for smaller images.
 - Base image: `node:20-alpine`
-- Don't copy `node_modules` into the image — install inside the build.
+- Don't copy `node_modules` into the image. Install inside the build.
 - Expose only the necessary port.
 - Include a health check endpoint.
+
+### Dockerfile Template
+
+```dockerfile
+# Build stage
+FROM node:20-alpine AS build
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci
+COPY . .
+RUN npm run build
+
+# Production stage
+FROM node:20-alpine AS production
+WORKDIR /app
+COPY --from=build /app/dist ./dist
+COPY --from=build /app/node_modules ./node_modules
+COPY --from=build /app/package.json ./
+EXPOSE 3000
+HEALTHCHECK --interval=30s --timeout=3s CMD wget -qO- http://localhost:3000/health || exit 1
+CMD ["node", "dist/server.js"]
+```
 
 ## GitHub Actions Pipeline
 The CI pipeline runs on every push to a PR branch:
