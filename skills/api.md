@@ -65,6 +65,36 @@ export async function getItems(params: GetItemsParams): Promise<PaginatedRespons
 - Configure stale time and cache time per query type.
 - Use `useMutation` for POST/PUT/DELETE operations.
 
+### Retry and Timeout
+- Use `AbortController` for request timeouts:
+
+```typescript
+async function apiClient<T>(endpoint: string, options?: RequestInit & { timeout?: number }): Promise<T> {
+  const controller = new AbortController();
+  const timeout = options?.timeout ?? 30000;
+  const timer = setTimeout(() => controller.abort(), timeout);
+
+  try {
+    const response = await fetch(`${BASE_URL}${endpoint}`, {
+      ...options,
+      signal: controller.signal,
+    });
+    if (!response.ok) throw new ApiError(response.status, 'Request failed');
+    return response.json();
+  } finally {
+    clearTimeout(timer);
+  }
+}
+```
+
+- React Query handles retries automatically (3 retries by default with exponential backoff).
+- For mutations, disable retries: `useMutation({ retry: false })`.
+
+### Rate Limiting
+- If the API returns 429 (Too Many Requests), respect the `Retry-After` header.
+- Queue requests if hitting rate limits. Do not spam retry.
+- Log rate limit events for debugging.
+
 ### Environment Variables
 - Base URL: `VITE_API_BASE_URL`
 - All env vars go in `.env.local` (never committed).
