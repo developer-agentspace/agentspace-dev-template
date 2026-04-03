@@ -16,6 +16,16 @@
      END OF PROJECT-SPECIFIC SECTION
      ========================================================== -->
 
+## Skills Reference
+
+This project has task-specific skill files in `/skills/` and `.claude/skills/`. When working on a specific area, read the relevant skill file:
+
+- **Frontend work:** `/skills/frontend.md` (React, TypeScript, Tailwind patterns)
+- **API work:** `/skills/api.md` (fetch client, React Query, error handling)
+- **Testing:** `/skills/testing.md` (React Testing Library, MSW, coverage)
+- **Database:** `/skills/database.md` (PostgreSQL conventions, schema patterns)
+- **Deployment:** `/skills/deployment.md` (Docker, CI/CD, env vars)
+
 ## 2. Tech Stack
 
 - **Frontend:** React 18, TypeScript (strict mode), Tailwind CSS
