@@ -67,14 +67,23 @@ Read these files in order:
 - Tests are mandatory — 80% coverage minimum
 - Never push to `main` directly
 
-## MCP Connections
+## Step 6: Configure MCP Connections
 
-Your PM or tech lead will help you configure:
-- **GitHub MCP** — Claude reads/writes code directly
-- **Figma MCP** — Claude sees UI designs
-- **Database MCP** — Claude queries the schema (if applicable)
+See `docs/mcp-setup.md` for detailed instructions. Quick setup:
 
-Run `/mcp` inside Claude Code to check connection status.
+```bash
+# GitHub MCP (required)
+claude mcp add --transport http github https://mcp.github.com
+
+# Figma MCP (required for UI work)
+claude mcp add --transport http figma https://mcp.figma.com
+```
+
+Verify: run `/mcp` inside Claude Code to check connection status.
+
+## Step 7: Self-Review Process
+
+After every coding task, before creating a PR, copy the self-review prompt from `templates/self-review-prompt.md` into Claude Code. This is Stage A of the Review Gate. It is not optional.
 
 ## Getting Help
 

@@ -81,3 +81,26 @@ Once the PR is approved and all checks pass:
 - **Phase 3 (3-6 months):** Claude picks up issues autonomously, humans review flagged items only
 
 Everything built in Phase 1 should be designed with Phase 3 in mind.
+
+## Flow Diagram
+
+```
+REQUIREMENT (GitHub Issue)
+     │
+     ▼
+SUPERPOWER LOAD (Claude reads CLAUDE.md + Skills + MCP)
+     │
+     ▼
+AGENTIC BUILD LOOP (Claude codes → runs → fixes → repeats)
+     │
+     ▼
+SELF-REVIEW (Claude reviews against CLAUDE.md and skill rules)
+     │
+     ▼
+HUMAN REVIEW (PR → Reviewer checks → SonarQube passes)
+     │
+     ▼
+MERGE & DEPLOY (CI/CD → Production)
+```
+
+This flow is identical for every task, every product, every developer. Only the contents of the skill files and the GitHub Issue change.
