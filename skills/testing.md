@@ -81,6 +81,53 @@ export const handlers = [
 - Keep mock data realistic and typed.
 - Test error responses too — not just happy paths.
 
+## Testing React Query Components
+
+Wrap components that use React Query in a test provider:
+
+```tsx
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
+function createTestQueryClient() {
+  return new QueryClient({
+    defaultOptions: {
+      queries: { retry: false },
+      mutations: { retry: false },
+    },
+  });
+}
+
+function renderWithQuery(ui: React.ReactElement) {
+  const client = createTestQueryClient();
+  return render(
+    <QueryClientProvider client={client}>{ui}</QueryClientProvider>
+  );
+}
+```
+
+## Testing Loading, Error, and Empty States
+
+Every data-connected component needs these three tests at minimum:
+
+```tsx
+it('shows loading skeleton while fetching', () => {
+  renderWithQuery(<ItemList />);
+  expect(screen.getByTestId('loading-skeleton')).toBeInTheDocument();
+});
+
+it('shows error message when API fails', async () => {
+  server.use(http.get('/api/items', () => HttpResponse.error()));
+  renderWithQuery(<ItemList />);
+  expect(await screen.findByText(/something went wrong/i)).toBeInTheDocument();
+});
+
+it('shows empty state when no data', async () => {
+  server.use(http.get('/api/items', () => HttpResponse.json([])));
+  renderWithQuery(<ItemList />);
+  expect(await screen.findByText(/no results/i)).toBeInTheDocument();
+});
+```
+
 ## Running Tests
 - `npm test` — run all tests
 - `npm run test:watch` — watch mode during development
