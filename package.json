@@ -14,11 +14,11 @@
   },
   "lint-staged": {
     "frontend/src/**/*.{ts,tsx}": [
-      "eslint --fix",
+      "bash -c 'cd frontend && npx eslint --fix'",
       "bash -c 'cd frontend && npx tsc --noEmit'"
     ],
     "frontend/src/**/*.{js,jsx}": [
-      "eslint --fix"
+      "bash -c 'cd frontend && npx eslint --fix'"
     ]
   }
 }
