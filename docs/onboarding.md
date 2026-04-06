@@ -85,6 +85,10 @@ Verify: run `/mcp` inside Claude Code to check connection status.
 
 After every coding task, before creating a PR, copy the self-review prompt from `templates/self-review-prompt.md` into Claude Code. This is Stage A of the Review Gate. It is not optional.
 
+## Step 8: Multi-Terminal Workflow (Advanced)
+
+Once comfortable with single-terminal Claude Code, read `docs/multi-terminal-workflow.md` to learn how to run 4 parallel sessions for approximately 4x productivity.
+
 ## Getting Help
 
 - **Stuck on a task?** Ask Claude first, then your PM.
