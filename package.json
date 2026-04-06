@@ -1,0 +1,20 @@
+{
+  "name": "agentspace-dev-template",
+  "private": true,
+  "scripts": {
+    "prepare": "husky"
+  },
+  "devDependencies": {
+    "husky": "^9.1.7",
+    "lint-staged": "^16.4.0"
+  },
+  "lint-staged": {
+    "frontend/src/**/*.{ts,tsx}": [
+      "eslint --fix",
+      "bash -c 'cd frontend && npx tsc --noEmit'"
+    ],
+    "frontend/src/**/*.{js,jsx}": [
+      "eslint --fix"
+    ]
+  }
+}
