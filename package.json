@@ -8,6 +8,7 @@
     "test:e2e:report": "playwright show-report"
   },
   "devDependencies": {
+    "@playwright/mcp": "^0.0.70",
     "@playwright/test": "^1.59.1",
     "husky": "^9.1.7",
     "lint-staged": "^16.4.0"

@@ -55,6 +55,19 @@ Gives Claude the ability to post updates and read channels.
 
 [FILL_PER_PROJECT — Only set up if the project uses Slack for notifications.]
 
+## Playwright MCP (Browser Control)
+
+Gives Claude the ability to control a real browser for debugging UI issues, verifying layouts, and testing interactions live.
+
+```bash
+claude mcp add playwright -- npx @playwright/mcp@latest
+```
+
+**Verify it works:**
+1. Open Claude Code
+2. Ask Claude: "Open localhost:3000 in a browser and take a screenshot"
+3. Claude should launch a browser and return the screenshot
+
 ## Troubleshooting
 
 - **Connection prompt keeps appearing:** Run `/mcp` inside Claude Code to authenticate.
