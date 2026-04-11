@@ -85,6 +85,8 @@ Verify: run `/mcp` inside Claude Code to check connection status.
 
 After every coding task, before creating a PR, copy the self-review prompt from `templates/self-review-prompt.md` into Claude Code. This is Stage A of the Review Gate. It is not optional.
 
+After your self-review and before requesting a human reviewer, skim [`skills/code-review.md`](../skills/code-review.md) — that's the playbook your reviewer will use. It tells you what they'll be looking for, the `blocker:` / `suggestion:` / `nit:` conventions, and the expected response time. Knowing the reviewer's playbook makes it easier to write a PR that doesn't bounce.
+
 ## Step 8: Multi-Terminal Workflow (Advanced)
 
 Once comfortable with single-terminal Claude Code, read `docs/multi-terminal-workflow.md` to learn how to run 4 parallel sessions for approximately 4x productivity.
