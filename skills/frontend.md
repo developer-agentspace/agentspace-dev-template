@@ -135,6 +135,47 @@ if (!data?.length) return <p className="text-gray-400 text-center p-6">No result
 - Shared components go in `/components/`. Page-specific sub-components can live in `/pages/PageName/`.
 - Custom hooks go in `/hooks/`. Name them `useXxx`.
 
+### Analytics
+
+The template ships a provider-agnostic analytics layer at `frontend/src/lib/analytics.ts` with a typed event catalog at `frontend/src/lib/analytics-events.ts`. The default implementation is a no-op that logs to `console.debug` in development. To wire in a real provider (Posthog, Mixpanel, Amplitude, GA4), implement the `AnalyticsProvider` interface and call `setAnalyticsProvider()` once at app startup — the JSDoc on `setAnalyticsProvider` has the exact code for Posthog as an example.
+
+**The three calls you'll use:**
+
+```ts
+import { track, identify, page } from '../lib/analytics';
+
+// User performed an action
+track('search_performed', { feature: 'shipping-bill-search', resultCount: 42 });
+
+// Login completed — associate the session with a user
+identify(user.id, { plan: 'pro', tenantId: org.id });
+
+// Route changed
+page('reports', { reportType: 'cha' });
+```
+
+**To add a new event:**
+
+1. Add the name to `EVENT_NAMES` in `frontend/src/lib/analytics-events.ts`
+2. Add an entry to `EVENT_METADATA` with description and required props
+3. Use it from a component via `track('your_event_name', { ... })` — TypeScript will autocomplete and refuse typos
+
+**Naming convention:** `<object>_<verb_in_past_tense>` — `search_performed`, not `perform_search`. See the catalog file for the rationale.
+
+**PII rules — same as `docs/logging.md` and `skills/security.md`:**
+
+- **Never** include emails, names, phone numbers, addresses, tokens, free-text user input, or any other PII in event payloads
+- **Always** use opaque IDs (`userId: 'usr_abc'`, `tenantId: 'org_xyz'`)
+- **Never** include the raw search query — track the result count instead
+
+The library has a `scrubPII()` backstop that drops fields with known forbidden names (`email`, `password`, `cardNumber`, etc.) before they reach the provider, but treat it as a safety net, not a primary defense. If you wouldn't be comfortable seeing it in a database breach disclosure, don't track it.
+
+**When to track and when not to:**
+
+- **Track** load-bearing user actions, completed flows, errors users see
+- **Don't track** every click, scroll, or hover — that's noise that drowns out signal
+- **Don't track** internal state changes the user doesn't trigger
+
 <!-- ==========================================================
      PROJECT-SPECIFIC SECTION: Fill this when starting a new project
      ========================================================== -->
