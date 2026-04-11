@@ -1,10 +1,22 @@
 node_modules
 dist
-.env
-.env.local
 coverage
 *.tsbuildinfo
 .DS_Store
+
+# Secrets and env files — see skills/security.md
+# Never commit any of these. .env.example is the only env file in git.
+.env
+.env.local
+.env.*.local
+.env.development
+.env.staging
+.env.production
+*.pem
+*.key
+*.crt
+*.p12
+secrets/
 
 # code-review-graph
 setup-crg.sh

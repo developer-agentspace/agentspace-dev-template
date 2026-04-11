@@ -1,5 +1,7 @@
 # API Skill — Backend Integration Rules
 
+> **Security note:** Auth flows, token storage, CSRF, and PII rules are covered in [`security.md`](./security.md). Read that before touching anything in this file that deals with authentication or sensitive data.
+
 ## Purpose
 This skill defines how Claude Code should handle all API communication. Every API call in the project follows these patterns.
 
