@@ -67,6 +67,27 @@ Read these files in order:
 - Tests are mandatory — 80% coverage minimum
 - Never push to `main` directly
 
+## Step 5.5: Configure your local git
+
+Run these once after cloning. Replace placeholders with your actual values.
+
+```bash
+# Identity — match your GitHub email
+git config --global user.name "Your Name"
+git config --global user.email "you@agentspace.ai"
+
+# Use the project commit message template (run inside the repo)
+git config --local commit.template .gitmessage
+
+# Pull = fetch + rebase, never merge
+git config --global pull.rebase true
+
+# Auto-prune deleted remote branches
+git config --global fetch.prune true
+```
+
+The full git workflow — branch names, commit format, PR conventions, merge strategy — is documented in [`skills/git-workflow.md`](../skills/git-workflow.md). Read it before opening your first PR.
+
 ## Step 6: Configure MCP Connections
 
 See `docs/mcp-setup.md` for detailed instructions. Quick setup:

@@ -107,12 +107,15 @@ Separate each group with a blank line.
 
 ## 5. Git and Commit Rules
 
+> The full convention — branch naming format, commit message format, PR template, merge strategy, tag strategy, and how to set up your local git config — lives in [`skills/git-workflow.md`](skills/git-workflow.md). The bullets below are the one-paragraph summary; defer to the skill file when they conflict.
+
 - **Commit after every Claude Code prompt.** This is version control insurance.
-- **Branch naming:** `feature/short-description`, `fix/short-description`, `chore/short-description`
-- **Commit messages:** Present tense, imperative mood. Example: "Add date range filter component"
+- **Branch naming:** `{type}/{issue-number}-{short-kebab-description}` — e.g. `feature/24-date-range-filter`. Allowed types: `feature`, `fix`, `docs`, `refactor`, `chore`, `test`.
+- **Commit messages:** simplified Conventional Commits — `{type}({scope}): {imperative subject ≤72 chars}`, optional body explaining *why*. Example: `feat(search): add date range filter to shipping bills`.
 - **Never push directly to `main`.** All changes go through PRs.
 - **One GitHub issue = one branch = one PR.** Don't bundle unrelated changes.
-- **PR title matches the ticket title.**
+- **PR title matches the ticket title.** PR body uses the `.github/pull_request_template.md` template.
+- **Merge strategy: squash merge.** One PR = one commit on `main`. No merge commits, no force-push, no rebase merge.
 
 ## 6. What NOT to Do
 
