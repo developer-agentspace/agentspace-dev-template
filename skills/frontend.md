@@ -135,6 +135,69 @@ if (!data?.length) return <p className="text-gray-400 text-center p-6">No result
 - Shared components go in `/components/`. Page-specific sub-components can live in `/pages/PageName/`.
 - Custom hooks go in `/hooks/`. Name them `useXxx`.
 
+### Feature Flags
+
+The template ships a lightweight feature flag system split across a few files so each one is single-purpose (and so the React Fast Refresh ESLint rule stays happy):
+
+- `frontend/src/lib/flags-config.ts` — typed registry of flag names, defaults, owners, expiry dates
+- `frontend/src/lib/flags.ts` — framework-agnostic helpers (`isEnabled`, `setFlagOverride`, `clearFlagOverride`, `subscribeToFlagChanges`)
+- `frontend/src/lib/useFlag.ts` — React hook that re-renders on override changes
+- `frontend/src/lib/FeatureFlag.tsx` — wrapper component for conditional rendering
+
+Use it whenever you ship code to production that should not yet be visible to all users — typically WIP features, A/B variants, or anything you want to be able to roll back without a redeploy.
+
+**The three things you actually need:**
+
+```tsx
+import { isEnabled } from '../lib/flags';
+import { useFlag } from '../lib/useFlag';
+import { FeatureFlag } from '../lib/FeatureFlag';
+
+// 1. Sync check — for utilities, event handlers, non-React code
+if (isEnabled('example-csv-export')) {
+  exportToCsv();
+}
+
+// 2. Hook — for components that need to react to flag changes
+function Dashboard() {
+  const newLayout = useFlag('example-new-dashboard');
+  return newLayout ? <NewDashboard /> : <OldDashboard />;
+}
+
+// 3. Wrapper component — cleaner than ternaries for large blocks
+<FeatureFlag flag="example-csv-export" fallback={null}>
+  <ExportCsvButton />
+</FeatureFlag>
+```
+
+**How to add a new flag:**
+
+1. Add the kebab-case name to the `FLAG_NAMES` tuple in `frontend/src/lib/flags-config.ts`. The TypeScript union ensures every call site is type-checked.
+2. Add a matching entry to `FLAG_METADATA` with `description`, `defaultValue`, `owner`, and `expiresOn`. **Every flag must have an expiry date** — flags without one rot into permanent dead code.
+3. Add the corresponding `VITE_FLAG_<UPPER_SNAKE>` entry to `frontend/.env.example`.
+4. Set the value in your real `.env.local` file (or leave unset to use the default).
+
+**Resolution order** (first match wins): localStorage override → env var → metadata default. The localStorage override is intentionally available in production builds so support engineers can flip a flag for one user session without a redeploy. Set it from the browser console:
+
+```js
+localStorage.setItem('flag:example-new-dashboard', 'true');
+// or programmatically:
+import { setFlagOverride, clearFlagOverride } from './lib/flags';
+setFlagOverride('example-new-dashboard', true);
+clearFlagOverride('example-new-dashboard');
+```
+
+**When to use a flag vs deleting dead code:**
+
+- Use a flag when the new code is **finished but not ready for users yet** (waiting on QA, comms, legal, partner integration).
+- Use a flag when a **rollback path** matters (the change is large enough that you want to be able to flip it off without a redeploy).
+- **Do NOT use a flag** to keep half-finished code in `main` indefinitely. That's what feature branches are for.
+- **Do NOT use a flag** for permanent configuration (per-tenant settings, env-specific URLs). Those go in env vars or per-tenant config.
+
+**Flag deprecation policy:**
+
+When a flag has been at 100% rollout for two weeks, or has been off for two weeks with no plan to enable, **delete the flag and the branch it gates in the same PR**. The `expiresOn` field exists to remind the owner to do this. A flag past its expiry should appear in the weekly review and either get re-justified (with a new expiry) or removed.
+
 <!-- ==========================================================
      PROJECT-SPECIFIC SECTION: Fill this when starting a new project
      ========================================================== -->
