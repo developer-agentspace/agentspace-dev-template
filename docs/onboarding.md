@@ -89,9 +89,20 @@ After every coding task, before creating a PR, copy the self-review prompt from 
 
 Once comfortable with single-terminal Claude Code, read `docs/multi-terminal-workflow.md` to learn how to run 4 parallel sessions for approximately 4x productivity.
 
+## Step 9: Read the runbooks before you need them
+
+Open [`docs/runbooks/`](./runbooks/) and skim:
+
+- [`deployment-runbook.md`](./runbooks/deployment-runbook.md) — read this before your first production deploy
+- [`incident-response.md`](./runbooks/incident-response.md) — read this **now**, while nothing is broken. The first time you read it should not be at 2am during an outage.
+- [`postmortem-template.md`](./runbooks/postmortem-template.md) — used within 48h of any SEV1 or SEV2
+
+You don't need to memorize them. You need to know they exist and where they live.
+
 ## Getting Help
 
 - **Stuck on a task?** Ask Claude first, then your PM.
 - **Architecture question?** Check `docs/architecture.md`, then ask the tech lead.
+- **About to deploy or in an incident?** Open the relevant runbook in `docs/runbooks/` and follow it step by step.
 - **Process question?** Ask your PM.
 - **Blocked by missing info?** Create a blocker comment on the GitHub Issue and flag it at standup.
