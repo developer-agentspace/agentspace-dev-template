@@ -89,9 +89,14 @@ After every coding task, before creating a PR, copy the self-review prompt from 
 
 Once comfortable with single-terminal Claude Code, read `docs/multi-terminal-workflow.md` to learn how to run 4 parallel sessions for approximately 4x productivity.
 
+## Step 9: Know where the runbooks live
+
+For operational procedures — production deploys, incident response, recovery from outages — read [`docs/runbooks/`](./runbooks/) and skim the index. You don't need to memorize them, but you do need to know they exist so you can find them in a hurry. Start with [`docs/runbooks/deployment-runbook.md`](./runbooks/deployment-runbook.md) before your first production deploy.
+
 ## Getting Help
 
 - **Stuck on a task?** Ask Claude first, then your PM.
 - **Architecture question?** Check `docs/architecture.md`, then ask the tech lead.
+- **About to deploy?** Open `docs/runbooks/deployment-runbook.md` and follow it step by step.
 - **Process question?** Ask your PM.
 - **Blocked by missing info?** Create a blocker comment on the GitHub Issue and flag it at standup.

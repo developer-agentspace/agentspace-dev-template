@@ -1,5 +1,7 @@
 # Deployment Skill — CI/CD and Release Process
 
+> **Doing an actual deploy?** This file describes the *patterns*. The step-by-step procedure for a real deploy lives in [`docs/runbooks/deployment-runbook.md`](../docs/runbooks/deployment-runbook.md). Read this skill once to understand the conventions; use the runbook every time you ship.
+
 ## Purpose
 This skill defines how code gets from a merged PR to production for all Agent Space projects.
 
