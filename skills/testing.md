@@ -128,6 +128,39 @@ it('shows empty state when no data', async () => {
 });
 ```
 
+## Accessibility tests with jest-axe
+
+Every reusable component should have an automated a11y check. The full accessibility skill is in [`accessibility.md`](./accessibility.md) — this section is just the test plumbing.
+
+Install (in a real project; the dev template doesn't ship the actual package):
+
+```bash
+npm install --save-dev jest-axe @types/jest-axe
+```
+
+Add to your test setup file (`src/test/setup.ts`):
+
+```ts
+import { toHaveNoViolations } from 'jest-axe';
+import { expect } from 'vitest';
+
+expect.extend(toHaveNoViolations);
+```
+
+Then in any component test:
+
+```tsx
+import { axe } from 'jest-axe';
+import { render } from '@testing-library/react';
+
+it('has no accessibility violations', async () => {
+  const { container } = render(<MyComponent />);
+  expect(await axe(container)).toHaveNoViolations();
+});
+```
+
+This catches roughly 30% of WCAG issues automatically — the rest require manual keyboard and screen reader testing as described in `accessibility.md`. Storybook's a11y addon (ticket 5.3) runs the same axe checks against every story without writing test code.
+
 ## Running Tests
 - `npm test` — run all tests
 - `npm run test:watch` — watch mode during development

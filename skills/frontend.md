@@ -70,11 +70,17 @@ export function DashboardPage({ title, defaultDateRange }: DashboardPageProps) {
 - Images: use lazy loading, provide width/height to prevent layout shift.
 
 ### Accessibility
-- All interactive elements must be keyboard accessible.
+
+> Full rules, ARIA patterns, testing setup, and PR checklist live in [`accessibility.md`](./accessibility.md). The bullets below are the always-on minimums.
+
+- All interactive elements must be keyboard accessible — `Tab` reaches them, focus is visible, no traps.
 - Use semantic HTML: `<button>` not `<div onClick>`, `<nav>`, `<main>`, `<section>`.
 - Images need `alt` text. Decorative images use `alt=""`.
-- Form inputs need associated `<label>` elements.
-- Color contrast must meet WCAG AA (4.5:1 for text).
+- Form inputs need associated `<label>` elements (`htmlFor`/`id`).
+- Color contrast must meet WCAG 2.1 AA (4.5:1 for body text, 3:1 for large text and UI components).
+- Color is never the only signal for state — pair with icons or text.
+- For ARIA patterns (tabs, modals, comboboxes) prefer **Headless UI** or **Radix UI** primitives over hand-rolling.
+- Run the **axe DevTools** browser extension on every new page before opening a PR.
 
 ### Data Fetching Pattern
 Always use React Query. Never use `useEffect` + `fetch`.

@@ -17,6 +17,7 @@ Closes #[issue number]
 - [ ] No `console.log` in production code
 - [ ] No hardcoded URLs or secrets
 - [ ] No `any` types
+- [ ] Accessible per `skills/accessibility.md`: keyboard reachable, semantic HTML, labels on inputs, alt on images, contrast ≥ 4.5:1, axe DevTools clean
 
 ## Screenshots
 
