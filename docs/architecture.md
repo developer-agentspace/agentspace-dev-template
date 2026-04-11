@@ -1,5 +1,7 @@
 # System Architecture — The 4-Layer Workflow
 
+> **Looking for the *why* behind specific decisions?** This document describes the *current* architecture. The decisions that shaped it — and the alternatives that were considered and rejected — live in [`adrs/`](./adrs/). New developers should read every ADR before making non-trivial changes.
+
 ## Overview
 
 Every task at Agent Space flows through the same 4 layers, regardless of which product is being built or which developer is doing the work.

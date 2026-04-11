@@ -175,10 +175,12 @@ Separate each group with a blank line.
 2. **SonarQube:** Code must pass the quality gate before PR can be merged.
 3. **Human review:** Every PR requires at least one approved review.
 4. **No merge without approval.** No exceptions.
-5. **PR checklist:**
+5. **Architecture Decision Records (ADRs):** Any decision that affects project structure, adds or removes a major dependency, locks in a pattern other code will follow, or has a hard-to-reverse cost must be captured as an ADR in [`docs/adrs/`](docs/adrs/). Use the template at `docs/adrs/000-template.md`. ADRs are short (200–500 words) and never deleted — superseded ADRs stay in the repo with a pointer to their replacement. New developers should read every ADR before touching the codebase.
+6. **PR checklist:**
    - [ ] Tests pass locally
    - [ ] Coverage >= 80%
    - [ ] Lint passes (`npm run lint`)
    - [ ] Type check passes (`npx tsc --noEmit`)
    - [ ] Build succeeds (`npm run build`)
    - [ ] Self-review completed
+   - [ ] If the PR contains a non-trivial architectural decision, an ADR is included

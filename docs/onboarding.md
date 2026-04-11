@@ -89,9 +89,13 @@ After every coding task, before creating a PR, copy the self-review prompt from 
 
 Once comfortable with single-terminal Claude Code, read `docs/multi-terminal-workflow.md` to learn how to run 4 parallel sessions for approximately 4x productivity.
 
+## Step 9: Read the Architecture Decision Records
+
+Before you make non-trivial changes to the codebase, read every ADR in [`docs/adrs/`](./adrs/) in numerical order. They are short (200–500 words each) and capture the *why* behind the project's biggest technical decisions — what was considered, what was picked, and what tradeoffs we accepted. Reading them is the fastest way to understand "why does the code look like this?" without having to ask the original author. ADRs you write or amend yourself follow the process documented in [`docs/adrs/README.md`](./adrs/README.md).
+
 ## Getting Help
 
 - **Stuck on a task?** Ask Claude first, then your PM.
-- **Architecture question?** Check `docs/architecture.md`, then ask the tech lead.
+- **Architecture question?** Check `docs/architecture.md` and `docs/adrs/`, then ask the tech lead.
 - **Process question?** Ask your PM.
 - **Blocked by missing info?** Create a blocker comment on the GitHub Issue and flag it at standup.
