@@ -119,7 +119,8 @@ Separate each group with a blank line.
 - **No Axios.** Security risk (supply chain compromise). Use native `fetch` wrapped in `/lib/api.ts`.
 - **No Redux, Zustand, or MobX.** React Query + Context is sufficient for our use cases.
 - **No hardcoded URLs.** All URLs come from environment variables via `import.meta.env`.
-- **No `.env` files committed.** Use `.env.example` with placeholder values. Add `.env*` to `.gitignore`.
+- **No `.env` files committed.** Use `.env.example` with placeholder values. Add `.env*` to `.gitignore`. See `skills/security.md` for the full secrets policy.
+- **Never log sensitive PII to Sentry breadcrumbs, error events, or extras.** Opaque IDs only. The `beforeSend` scrubber in `frontend/sentry.client.config.ts` is a backstop, not a primary defense. See `skills/observability.md` for the full PII-in-Sentry guide and `skills/security.md` for the PII definition.
 - **No inline styles.** Use Tailwind classes exclusively.
 - **No `console.log` in production code.** Remove before PR or use a proper logger.
 - **No `any` type in TypeScript.** Use `unknown` and narrow with type guards if the type is truly unknown.

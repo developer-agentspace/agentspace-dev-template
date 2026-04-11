@@ -19,5 +19,14 @@ export default defineConfig([
       ecmaVersion: 2020,
       globals: globals.browser,
     },
+    rules: {
+      // Allow leading-underscore parameters as a "this is intentionally
+      // unused" marker. Used by the monitoring/Sentry shim and other
+      // placeholder modules whose bodies are commented-out.
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
+      ],
+    },
   },
 ])

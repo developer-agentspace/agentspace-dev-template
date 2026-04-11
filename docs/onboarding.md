@@ -67,6 +67,22 @@ Read these files in order:
 - Tests are mandatory — 80% coverage minimum
 - Never push to `main` directly
 
+## Step 5.6: Set up Sentry (if your project uses it)
+
+Sentry is the template's standard error monitoring tool. The scaffolding ships in `frontend/sentry.client.config.ts` and `frontend/src/lib/monitoring.ts`, but Sentry is **disabled by default** until a project provides a DSN.
+
+To activate Sentry in your project:
+
+1. Read [`skills/observability.md`](../skills/observability.md) for the full setup
+2. Create a project at https://sentry.io and copy the DSN
+3. Install the SDK: `npm install --save @sentry/react`
+4. Add `VITE_SENTRY_DSN` to your hosting provider's env (production + staging) — never commit it
+5. Uncomment the body of `frontend/sentry.client.config.ts`
+6. Add `initSentry()` to `frontend/src/main.tsx` *before* `createRoot()`
+7. Wire the structured logger transport to Sentry — see the worked example in `skills/observability.md`
+
+Local dev keeps Sentry disabled (no DSN in `.env.example`) so test errors don't pollute the production project.
+
 ## Step 6: Configure MCP Connections
 
 See `docs/mcp-setup.md` for detailed instructions. Quick setup:
