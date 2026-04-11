@@ -63,11 +63,16 @@ export function DashboardPage({ title, defaultDateRange }: DashboardPageProps) {
 - Colors: use Tailwind's color palette or project-defined CSS variables. No hardcoded hex values.
 
 ### Performance
+
+> Full performance budgets, profiling guide, image and font rules, React memoization rules, and the Lighthouse CI workflow live in [`performance.md`](./performance.md). The bullets below are the always-on minimums.
+
 - Use `React.lazy()` for route-level code splitting.
-- Memoize expensive computations with `useMemo`.
-- Memoize callback props with `useCallback` only when passing to memoized children.
-- Don't over-optimize — premature memoization adds complexity without benefit.
-- Images: use lazy loading, provide width/height to prevent layout shift.
+- Memoize expensive computations with `useMemo`. Memoize callback props with `useCallback` only when passing to memoized children.
+- Don't over-optimize — premature memoization adds complexity without benefit. Profile first.
+- Images: use modern formats (WebP/AVIF), `width` and `height` attributes, `loading="lazy"` for below-the-fold.
+- Fonts: `font-display: swap`, preload critical fonts, self-host instead of CDN.
+- Set `staleTime` deliberately on every React Query call — the default of 0 refetches on every mount.
+- **Lighthouse CI runs on every PR** and will fail merge if the budgets in `frontend/lighthouserc.json` are exceeded. Run `npm run lhci` locally before opening a PR.
 
 ### Accessibility
 - All interactive elements must be keyboard accessible.

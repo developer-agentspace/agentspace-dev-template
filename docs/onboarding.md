@@ -67,6 +67,18 @@ Read these files in order:
 - Tests are mandatory — 80% coverage minimum
 - Never push to `main` directly
 
+## Step 5.7: Run Lighthouse CI locally
+
+Before opening any PR that changes the UI, run Lighthouse against your build to make sure you haven't blown a performance budget. The same checks run in CI.
+
+```bash
+cd frontend
+npm run build
+npm run lhci
+```
+
+If the assertions fail, the report at `.lighthouseci/` (open the HTML file) will tell you which budget you exceeded and what to fix. Read [`skills/performance.md`](../skills/performance.md) for the full budget table and the patterns that protect each metric.
+
 ## Step 6: Configure MCP Connections
 
 See `docs/mcp-setup.md` for detailed instructions. Quick setup:
