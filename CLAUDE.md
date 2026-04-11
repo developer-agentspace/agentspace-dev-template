@@ -121,7 +121,7 @@ Separate each group with a blank line.
 - **No hardcoded URLs.** All URLs come from environment variables via `import.meta.env`.
 - **No `.env` files committed.** Use `.env.example` with placeholder values. Add `.env*` to `.gitignore`.
 - **No inline styles.** Use Tailwind classes exclusively.
-- **No `console.log` in production code.** Remove before PR or use a proper logger.
+- **No `console.log` anywhere.** Use the structured `logger` at `frontend/src/lib/logger.ts` instead. ESLint blocks direct `console.*` calls in every file except the logger implementation. See `docs/logging.md` for the rules on what to log and what NOT to log (PII, secrets, high-frequency events).
 - **No `any` type in TypeScript.** Use `unknown` and narrow with type guards if the type is truly unknown.
 - **No unused imports or variables.** ESLint will catch these. Fix them, do not suppress.
 - **No magic numbers or strings.** Extract to named constants in `/constants/`.

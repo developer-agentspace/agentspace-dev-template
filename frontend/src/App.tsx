@@ -1,9 +1,10 @@
 import { DateRangeFilter } from './components/DateRangeFilter';
+import { logger } from './lib/logger';
 
 export function App() {
   const handleFilterChange = (startDate: string, endDate: string) => {
     // In a real app, this would trigger data refetch via React Query
-    console.info(`Filter changed: ${startDate} to ${endDate}`);
+    logger.info('filter changed', { feature: 'demo-app', action: 'change-date-range', startDate, endDate });
   };
 
   return (

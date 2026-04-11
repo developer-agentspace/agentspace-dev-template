@@ -19,5 +19,17 @@ export default defineConfig([
       ecmaVersion: 2020,
       globals: globals.browser,
     },
+    rules: {
+      // The structured logger in src/lib/logger.ts is the only place where
+      // direct console.* calls are allowed. Everywhere else, use `logger`.
+      'no-console': 'error',
+    },
+  },
+  {
+    // Allow console.* inside the logger implementation and its tests.
+    files: ['src/lib/logger.ts', 'src/lib/logger.test.ts'],
+    rules: {
+      'no-console': 'off',
+    },
   },
 ])
