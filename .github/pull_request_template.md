@@ -21,3 +21,7 @@ Closes #[issue number]
 ## Screenshots
 
 [If UI changes, include before/after screenshots]
+
+---
+
+> **Note for Dependabot PRs:** Dependabot opens its own auto-generated PRs with grouped changelogs. The reviewer follows the rules in [`docs/dependency-upgrades.md`](../docs/dependency-upgrades.md) instead of this checklist. CI must still be green before merging.

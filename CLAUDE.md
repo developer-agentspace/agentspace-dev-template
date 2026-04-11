@@ -131,6 +131,7 @@ Separate each group with a blank line.
 - **No copy-pasting API URLs into components.** All API calls go through `/lib/api.ts`.
 - **No skipping the self-review step.** Claude must review its own output before PR creation.
 - **No merging without CI passing.** SonarQube, lint, type check, tests, and build must all pass.
+- **No casual dependency additions.** Every new package in `package.json` needs a documented reason in the PR description, must clear `npm audit`, and must respect the blacklist above (no Axios, Redux, Zustand, MobX). Three lines of inline code beats a 50KB transitive dep tree. See `docs/dependency-upgrades.md` for the upgrade and addition policy.
 
 ## 7. Testing Requirements
 
