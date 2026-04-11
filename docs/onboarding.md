@@ -67,6 +67,20 @@ Read these files in order:
 - Tests are mandatory — 80% coverage minimum
 - Never push to `main` directly
 
+## Step 5.8: Run Storybook (optional but encouraged)
+
+Storybook is the project's living component library. The template ships pre-configured `.storybook/main.ts` and `preview.ts` files, plus example stories for `Button` and `Card`.
+
+To activate:
+
+```bash
+cd frontend
+npx storybook@latest init   # installs Storybook deps; the config files in this repo are picked up
+npm run storybook           # opens at http://localhost:6006
+```
+
+When you build a new reusable component (anything in `/components/`), write at least one story alongside it — see `skills/frontend.md` Component Documentation section for the rules.
+
 ## Step 6: Configure MCP Connections
 
 See `docs/mcp-setup.md` for detailed instructions. Quick setup:

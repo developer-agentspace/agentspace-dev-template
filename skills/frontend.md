@@ -131,9 +131,62 @@ if (!data?.length) return <p className="text-gray-400 text-center p-6">No result
 
 ### File Organization
 - One component per file.
-- Colocate component + test: `StatCard.tsx` and `StatCard.test.tsx` in the same folder.
+- Colocate component + test + story: `Button.tsx`, `Button.test.tsx`, `Button.stories.tsx` in the same folder.
 - Shared components go in `/components/`. Page-specific sub-components can live in `/pages/PageName/`.
 - Custom hooks go in `/hooks/`. Name them `useXxx`.
+
+### Component Documentation with Storybook
+
+Every reusable primitive (`Button`, `Card`, `Input`, `Modal`, etc.) **must** have at least one Storybook story. Pages and one-off components don't need stories — only the things you'd reuse.
+
+**Why:** stories are how designers, PMs, and other devs see what components exist without spinning up the full app. They also catch a11y issues automatically via the Storybook a11y addon, which runs the same axe checks documented in `skills/accessibility.md`.
+
+**Setup:** the template ships with `.storybook/main.ts` and `.storybook/preview.ts` pre-configured for Vite + Tailwind v4. To activate Storybook in a project:
+
+```bash
+cd frontend
+npx storybook@latest init   # installs Storybook deps and writes its boilerplate
+npm run storybook           # opens at http://localhost:6006
+```
+
+The pre-existing `.storybook/main.ts` and `preview.ts` will be used as-is (Storybook init detects they exist and skips overwriting).
+
+**Writing a story:**
+
+```tsx
+// src/components/Button.stories.tsx
+import type { Meta, StoryObj } from '@storybook/react';
+import { Button } from './Button';
+
+const meta = {
+  title: 'Primitives/Button',
+  component: Button,
+  tags: ['autodocs'],
+  argTypes: {
+    variant: { control: 'select', options: ['primary', 'secondary', 'ghost'] },
+  },
+  args: { children: 'Click me' },
+} satisfies Meta<typeof Button>;
+
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const Primary: Story = { args: { variant: 'primary' } };
+export const Secondary: Story = { args: { variant: 'secondary' } };
+```
+
+**Story coverage rules:**
+
+- **Default story** showing the component with sensible default props
+- **Variant stories** — one per visual variant (primary, secondary, danger, etc.)
+- **State stories** — loading, disabled, error if applicable
+- **Composition story** — at least one showing the component in a realistic layout (e.g. inside a Card, in a grid)
+
+The two example stories in the template (`Button.stories.tsx`, `Card.stories.tsx`) demonstrate the pattern. Use them as a starting point.
+
+**The a11y addon runs on every story** and reports violations in the Storybook UI. Treat any reported violation the same way you'd treat a failing test — fix it before merge.
+
+**`npm run build-storybook`** produces a static site under `storybook-static/` that can be deployed to GitHub Pages or Chromatic for design review. `storybook-static/` is gitignored.
 
 <!-- ==========================================================
      PROJECT-SPECIFIC SECTION: Fill this when starting a new project

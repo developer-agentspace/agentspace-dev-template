@@ -6,6 +6,9 @@ coverage
 *.tsbuildinfo
 .DS_Store
 
+# Storybook
+storybook-static/
+
 # code-review-graph
 setup-crg.sh
 setup-crg.ps1
