@@ -61,10 +61,14 @@ The CI pipeline runs on every push to a PR branch:
 7. Report results on the PR
 
 ## Environment Variables
-- Never commit `.env` files.
-- Use `.env.example` as the reference for required variables.
-- In CI/CD, set variables via GitHub Secrets.
-- In Docker, pass variables at runtime, not build time.
+
+> Full per-environment strategy, secret rotation process, and the variable catalog live in [`docs/environments.md`](../docs/environments.md). The bullets below are the always-on rules.
+
+- Never commit `.env` files. Only `.env.example`, `.env.local.example`, `.env.staging.example`, `.env.production.example` are in git.
+- The `frontend/scripts/check-env.mjs` script runs before `dev` and `build` and fails fast if a required variable is missing.
+- In CI/CD, set variables via GitHub Secrets and the hosting provider's secret manager. Real secrets never live in any committed file.
+- In Docker, pass variables at runtime, not build time. `VITE_*` variables are baked at build time, so they must be present during `npm run build` — but real secrets stay on the backend regardless.
+- Adding a new required variable means updating `check-env.mjs`, `.env.example`, the per-env example files, AND `docs/environments.md` in the same PR. See the doc for the full checklist.
 
 ## Rollback
 - Keep the previous deployment artifact available.
