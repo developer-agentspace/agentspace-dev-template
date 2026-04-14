@@ -16,7 +16,8 @@
   "lint-staged": {
     "frontend/src/**/*.{ts,tsx}": [
       "bash -c 'cd frontend && npx eslint --fix'",
-      "bash -c 'cd frontend && npx tsc --noEmit'"
+      "bash -c 'cd frontend && npx tsc --noEmit'",
+      "bash -c 'cd frontend && npx vitest related --run'"
     ],
     "frontend/src/**/*.{js,jsx}": [
       "bash -c 'cd frontend && npx eslint --fix'"

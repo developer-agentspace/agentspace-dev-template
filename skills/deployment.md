@@ -1,5 +1,8 @@
 # Deployment Skill — CI/CD and Release Process
 
+<!-- activation-triggers: when modifying Dockerfiles, CI workflows, env vars, or preparing a production deploy -->
+> **When to read this:** before modifying CI/CD, Docker configs, env vars, or doing a production deploy. For the actual deploy procedure, use `docs/runbooks/deployment-runbook.md`.
+
 ## Purpose
 This skill defines how code gets from a merged PR to production for all Agent Space projects.
 
