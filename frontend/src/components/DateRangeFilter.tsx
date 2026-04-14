@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
 interface DateRangeFilterProps {
   onFilterChange: (startDate: string, endDate: string) => void;
@@ -6,27 +6,38 @@ interface DateRangeFilterProps {
   defaultEndDate?: string;
 }
 
-const TODAY = new Date().toISOString().split('T')[0];
-const THIRTY_DAYS_AGO = new Date(new Date().getTime() - 30 * 24 * 60 * 60 * 1000)
-  .toISOString()
-  .split('T')[0];
+function getDefaultDates() {
+  const today = new Date();
+  const thirtyDaysAgo = new Date(today.getTime() - 30 * 24 * 60 * 60 * 1000);
+  return {
+    today: today.toISOString().split('T')[0],
+    thirtyDaysAgo: thirtyDaysAgo.toISOString().split('T')[0],
+  };
+}
 
 export function DateRangeFilter({
   onFilterChange,
   defaultStartDate,
   defaultEndDate,
 }: DateRangeFilterProps) {
-  const [startDate, setStartDate] = useState(defaultStartDate ?? THIRTY_DAYS_AGO);
-  const [endDate, setEndDate] = useState(defaultEndDate ?? TODAY);
+  const defaults = useMemo(() => getDefaultDates(), []);
+  const [startDate, setStartDate] = useState(defaultStartDate ?? defaults.thirtyDaysAgo);
+  const [endDate, setEndDate] = useState(defaultEndDate ?? defaults.today);
+
+  const isInvalid = startDate !== '' && endDate !== '' && startDate > endDate;
 
   const handleStartChange = (value: string) => {
     setStartDate(value);
-    onFilterChange(value, endDate);
+    if (value && endDate && value <= endDate) {
+      onFilterChange(value, endDate);
+    }
   };
 
   const handleEndChange = (value: string) => {
     setEndDate(value);
-    onFilterChange(startDate, value);
+    if (startDate && value && startDate <= value) {
+      onFilterChange(startDate, value);
+    }
   };
 
   return (
@@ -38,8 +49,12 @@ export function DateRangeFilter({
         id="start-date"
         type="date"
         value={startDate}
+        max={endDate || undefined}
         onChange={(e) => handleStartChange(e.target.value)}
-        className="rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm text-gray-700 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+        aria-invalid={isInvalid || undefined}
+        className={`rounded-lg border bg-white px-3 py-2 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500/20 ${
+          isInvalid ? 'border-red-400 focus:border-red-500' : 'border-gray-200 focus:border-blue-500'
+        }`}
       />
       <label htmlFor="end-date" className="text-sm font-medium text-gray-600">
         To
@@ -48,9 +63,18 @@ export function DateRangeFilter({
         id="end-date"
         type="date"
         value={endDate}
+        min={startDate || undefined}
         onChange={(e) => handleEndChange(e.target.value)}
-        className="rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm text-gray-700 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+        aria-invalid={isInvalid || undefined}
+        className={`rounded-lg border bg-white px-3 py-2 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500/20 ${
+          isInvalid ? 'border-red-400 focus:border-red-500' : 'border-gray-200 focus:border-blue-500'
+        }`}
       />
+      {isInvalid && (
+        <span role="alert" className="text-xs text-red-500">
+          End date must be after start date
+        </span>
+      )}
     </div>
   );
 }

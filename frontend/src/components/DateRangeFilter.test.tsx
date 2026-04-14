@@ -4,9 +4,8 @@ import { vi, describe, it, expect } from 'vitest';
 import { DateRangeFilter } from './DateRangeFilter';
 
 describe('DateRangeFilter', () => {
-  it('renders start and end date inputs', () => {
+  it('renders start and end date inputs with labels', () => {
     render(<DateRangeFilter onFilterChange={vi.fn()} />);
-
     expect(screen.getByLabelText('From')).toBeInTheDocument();
     expect(screen.getByLabelText('To')).toBeInTheDocument();
   });
@@ -17,48 +16,65 @@ describe('DateRangeFilter', () => {
         onFilterChange={vi.fn()}
         defaultStartDate="2026-01-01"
         defaultEndDate="2026-01-31"
-      />
+      />,
     );
-
     expect(screen.getByLabelText('From')).toHaveValue('2026-01-01');
     expect(screen.getByLabelText('To')).toHaveValue('2026-01-31');
   });
 
-  it('calls onFilterChange when start date changes', async () => {
+  it('calls onFilterChange when start date changes to a valid range', async () => {
     const user = userEvent.setup();
     const handleChange = vi.fn();
-
     render(
       <DateRangeFilter
         onFilterChange={handleChange}
         defaultStartDate="2026-01-01"
         defaultEndDate="2026-01-31"
-      />
+      />,
     );
 
     const startInput = screen.getByLabelText('From');
     await user.clear(startInput);
-    await user.type(startInput, '2026-02-01');
-
+    await user.type(startInput, '2026-01-15');
     expect(handleChange).toHaveBeenCalled();
   });
 
   it('calls onFilterChange when end date changes', async () => {
     const user = userEvent.setup();
     const handleChange = vi.fn();
-
     render(
       <DateRangeFilter
         onFilterChange={handleChange}
         defaultStartDate="2026-01-01"
         defaultEndDate="2026-01-31"
-      />
+      />,
     );
 
     const endInput = screen.getByLabelText('To');
     await user.clear(endInput);
     await user.type(endInput, '2026-02-28');
-
     expect(handleChange).toHaveBeenCalled();
+  });
+
+  it('shows error message when end date is before start date', () => {
+    render(
+      <DateRangeFilter
+        onFilterChange={vi.fn()}
+        defaultStartDate="2026-02-01"
+        defaultEndDate="2026-01-01"
+      />,
+    );
+    expect(screen.getByRole('alert')).toHaveTextContent('End date must be after start date');
+  });
+
+  it('does not show error message for valid range', () => {
+    render(
+      <DateRangeFilter
+        onFilterChange={vi.fn()}
+        defaultStartDate="2026-01-01"
+        defaultEndDate="2026-01-31"
+      />,
+    );
+    expect(screen.queryByRole('alert')).not.toBeInTheDocument();
   });
 });

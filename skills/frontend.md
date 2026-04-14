@@ -1,4 +1,4 @@
-# Frontend Skill — React 18 + TypeScript + Tailwind CSS
+# Frontend Skill — React 19 + TypeScript + Tailwind CSS v4
 
 ## Purpose
 This skill defines how Claude Code should write frontend code for any Agent Space project. Follow these rules for all React component work.
