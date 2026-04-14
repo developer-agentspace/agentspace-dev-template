@@ -89,6 +89,10 @@ After every coding task, before creating a PR, copy the self-review prompt from 
 
 Once comfortable with single-terminal Claude Code, read `docs/multi-terminal-workflow.md` to learn how to run 4 parallel sessions for approximately 4x productivity.
 
+## Step 9: Know the weekly audit
+
+Every Friday, one person runs a 30-minute quality audit — test coverage, dependency health, feature flag hygiene, runbook freshness, CI status, and a security spot-check. The process is documented in [`docs/weekly-audit.md`](./weekly-audit.md). You don't need to run it your first week, but know it exists so you can take a rotation slot when you're settled.
+
 ## Getting Help
 
 - **Stuck on a task?** Ask Claude first, then your PM.

@@ -1,0 +1,20 @@
+# gitleaks configuration — credential scanning for pre-commit and CI.
+# See skills/security.md for the full secrets policy.
+# Docs: https://github.com/gitleaks/gitleaks
+
+title = "Agent Space gitleaks config"
+
+[extend]
+# Use the default gitleaks rules as the base.
+useDefault = true
+
+[allowlist]
+# Files that are known to contain placeholder/example values, not real secrets.
+paths = [
+  '''\.env\.example$''',
+  '''\.env\.local\.example$''',
+  '''\.env\.staging\.example$''',
+  '''\.env\.production\.example$''',
+  '''docs/''',
+  '''skills/''',
+]

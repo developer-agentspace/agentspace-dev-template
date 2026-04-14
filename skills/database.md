@@ -1,5 +1,8 @@
 # Database Skill — PostgreSQL Conventions
 
+<!-- activation-triggers: when creating migrations, modifying schema files, writing raw SQL, or touching any database-related code -->
+> **When to read this:** before creating a migration, modifying a schema, or writing any database query.
+
 ## Purpose
 This skill defines database naming conventions, schema patterns, and query standards for all Agent Space projects.
 

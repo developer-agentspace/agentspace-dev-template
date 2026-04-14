@@ -1,0 +1,8 @@
+# Enforce conventional commit format.
+# Install: npm install -D @commitlint/cli @commitlint/config-conventional
+# If commitlint is not installed, skip with a warning.
+if command -v npx &> /dev/null && [ -f "commitlint.config.js" ]; then
+  npx --no-install commitlint --edit "$1" 2>/dev/null || {
+    echo "⚠️  commitlint not installed — skipping format check. Run: npm install -D @commitlint/cli @commitlint/config-conventional"
+  }
+fi

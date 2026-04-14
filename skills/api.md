@@ -1,5 +1,8 @@
 # API Skill — Backend Integration Rules
 
+<!-- activation-triggers: when touching frontend/src/lib/api.ts, any file that imports from api.ts, or any React Query hook -->
+> **When to read this:** before writing or modifying any API call, fetch wrapper, or React Query hook.
+
 ## Purpose
 This skill defines how Claude Code should handle all API communication. Every API call in the project follows these patterns.
 

@@ -1,5 +1,8 @@
 # Testing Skill — Standards and Rules
 
+<!-- activation-triggers: when creating or modifying any .test.ts, .test.tsx file, or files in e2e/, or when test coverage drops -->
+> **When to read this:** before writing, modifying, or reviewing any test file.
+
 ## Purpose
 This skill defines testing standards for all Agent Space projects. Testing rules are 100% fixed — they do not change between projects.
 

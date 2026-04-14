@@ -1,1 +1,10 @@
 npx lint-staged
+
+# Credential scanning — blocks commits that contain secrets.
+# Install gitleaks: https://github.com/gitleaks/gitleaks#installing
+# If gitleaks is not installed, skip with a warning (don't block dev workflow).
+if command -v gitleaks &> /dev/null; then
+  gitleaks git --pre-commit --staged --config .gitleaks.toml
+else
+  echo "⚠️  gitleaks not installed — skipping credential scan. Install: https://github.com/gitleaks/gitleaks#installing"
+fi

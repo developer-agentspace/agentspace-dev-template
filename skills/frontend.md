@@ -1,5 +1,8 @@
 # Frontend Skill — React 19 + TypeScript + Tailwind CSS v4
 
+<!-- activation-triggers: when touching any file in frontend/src/components/, frontend/src/pages/, frontend/src/App.tsx, or any .tsx file -->
+> **When to read this:** before creating or modifying any React component, page, hook, or CSS. If you're touching a `.tsx` file, you should have read this.
+
 ## Purpose
 This skill defines how Claude Code should write frontend code for any Agent Space project. Follow these rules for all React component work.
 
