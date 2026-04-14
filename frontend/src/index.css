@@ -1,1 +1,40 @@
+/* =============================================================================
+ * index.css — Global styles and design tokens
+ *
+ * Layer order:
+ *   1. Tailwind import (generates utility classes)
+ *   2. @theme block (Tailwind v4 design tokens — fonts, colors, spacing overrides)
+ *   3. Base / reset overrides (body defaults, smooth scrolling)
+ *   4. Utility classes that Tailwind doesn't provide
+ *
+ * See skills/frontend.md for the full Tailwind CSS rules.
+ * ============================================================================= */
+
+/* --- 1. Tailwind ----------------------------------------------------------- */
 @import "tailwindcss";
+
+/* --- 2. Design tokens via Tailwind v4 @theme ------------------------------- */
+/* [FILL_PER_PROJECT] — uncomment and adjust for each project's design system.
+ *
+ * @theme {
+ *   --font-sans: 'Inter', sans-serif;
+ *   --font-heading: 'Poppins', sans-serif;
+ *   --color-brand: #2d9cdb;
+ *   --color-brand-hover: #2589c4;
+ *   --color-brand-light: #e8f4fc;
+ * }
+ */
+
+/* --- 3. Base / reset overrides --------------------------------------------- */
+body {
+  margin: 0;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* --- 4. Utilities Tailwind doesn't cover ----------------------------------- */
+/* [FILL_PER_PROJECT] — add project-specific utilities here if needed.
+ * Prefer Tailwind classes. Only add custom CSS when Tailwind genuinely
+ * can't handle the case.
+ */

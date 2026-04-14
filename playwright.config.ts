@@ -11,7 +11,7 @@ export default defineConfig({
     /* ========================================================
        PROJECT-SPECIFIC: Update baseURL per project
        ======================================================== */
-    baseURL: 'http://localhost:3000',
+    baseURL: 'http://localhost:5173',
     screenshot: 'only-on-failure',
     trace: 'on-first-retry',
     actionTimeout: 10000,
@@ -25,11 +25,12 @@ export default defineConfig({
   ],
 
   /* ========================================================
-     PROJECT-SPECIFIC: Update command and port per project
+     PROJECT-SPECIFIC: Update command and port per project.
+     Port 5173 is Vite's default.
      ======================================================== */
   webServer: {
     command: 'cd frontend && npm run dev',
-    port: 3000,
+    port: 5173,
     reuseExistingServer: !process.env.CI,
     timeout: 30000,
   },

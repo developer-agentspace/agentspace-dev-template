@@ -28,9 +28,10 @@ This project has task-specific skill files in `/skills/` and `.claude/skills/`. 
 
 ## 2. Tech Stack
 
-- **Frontend:** React 18, TypeScript (strict mode), Tailwind CSS
+- **Frontend:** React 19, TypeScript (strict mode), Tailwind CSS v4
 - **State Management:** React Query (server state), React Context + useState (UI state)
-- **Testing:** React Testing Library + Jest
+- **Routing:** React Router v7
+- **Testing:** React Testing Library + Vitest
 - **Build Tool:** Vite
 - **Backend:** Power Apps REST API (or project-specific backend)
 - **Database:** PostgreSQL
@@ -89,21 +90,28 @@ Separate each group with a blank line.
 
 ```
 /frontend/src/
-├── /components/      # Reusable UI components
+├── /components/      # Reusable UI components (Button.tsx, Button.test.tsx colocated)
 ├── /pages/           # Page-level components (one per route)
-├── /lib/             # API client, utility functions
+├── /lib/             # API client, utility functions, feature flags, logger, analytics
 │   └── api.ts        # Single source of truth for all API calls
 ├── /hooks/           # Custom React hooks
 ├── /types/           # TypeScript type definitions
 │   └── index.ts      # Barrel export
 ├── /constants/       # App-wide constants
 ├── /utils/           # Pure utility functions (formatting, validation)
-└── /tests/           # Test files mirror src structure
+├── /test/            # Test setup files (setup.ts, MSW handlers)
+├── App.tsx           # Root component — BrowserRouter + Routes
+└── main.tsx          # Entry point — renders App
 ```
 
-- Every folder has an `index.ts` barrel export
-- Test files live alongside source files: `StatCard.tsx` → `StatCard.test.tsx`
-- No deeply nested folders — max 3 levels deep
+```
+/e2e/                 # Playwright E2E tests (separate from unit tests)
+```
+
+- **Unit tests are colocated:** `Button.tsx` and `Button.test.tsx` in the same folder. No separate `/tests/` directory for unit tests.
+- **E2E tests live in `/e2e/`** at the repo root, not inside `src/`.
+- **Test setup** (vitest globals, jest-dom matchers) lives in `src/test/setup.ts`.
+- No deeply nested folders — max 3 levels deep.
 
 ## 5. Git and Commit Rules
 
