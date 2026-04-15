@@ -181,8 +181,8 @@ Separate each group with a blank line.
 
 1. **Self-review:** After finishing a task, prompt Claude to review its own code against this file and the relevant skill files. Fix all issues found.
 2. **SonarQube:** Code must pass the quality gate before PR can be merged.
-3. **Human review:** Every PR requires at least one approved review.
-4. **No merge without approval.** No exceptions.
+3. **Human review:** Every PR requires at least one approved review by someone other than the author. Reviewers follow the playbook in [`skills/code-review.md`](skills/code-review.md) — what to check, how to give feedback, blocker vs nit conventions, and when to escalate to a domain owner (Chinmay for auth/infra, Tanay for design system, Akshat for accessibility).
+4. **No merge without approval.** No exceptions. Self-merge is forbidden even for tiny changes.
 5. **PR checklist:**
    - [ ] Tests pass locally
    - [ ] Coverage >= 80%
