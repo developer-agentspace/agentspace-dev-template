@@ -1,0 +1,40 @@
+# {type}({scope}): {subject in present-tense imperative, max 72 chars}
+#
+# {Body — explain WHY this change exists, not WHAT it does. The diff
+# shows what. Wrap at 72 characters. Optional but encouraged for any
+# non-trivial change.}
+#
+# {Footer — close issues, mark breaking changes, refs to related PRs.}
+# Closes #
+#
+# ----------------------------------------------------------------------
+# Allowed types:
+#   feat     — new user-facing feature
+#   fix      — bug fix
+#   docs     — documentation only
+#   style    — formatting, missing semicolons, no code change
+#   refactor — code change that neither fixes a bug nor adds a feature
+#   test     — adding or fixing tests
+#   chore    — build, deps, tooling, config
+#   perf     — performance improvement
+#   ci       — CI/CD pipeline changes
+#
+# Scope is optional. Use a noun from the codebase: api, auth, search,
+# reports, etc.
+#
+# Subject rules:
+#   • imperative present tense ("add", not "added")
+#   • no trailing period
+#   • max 72 characters
+#
+# Examples:
+#   feat(search): add date range filter to shipping bills
+#   fix(auth): clear React Query cache on logout
+#   docs(adrs): record decision to use Tailwind over custom CSS
+#   chore(deps): bump react-query from 5.96 to 5.98 (patch group)
+#
+# Set this template as your commit editor for this repo with:
+#   git config --local commit.template .gitmessage
+#
+# See skills/git-workflow.md for the full convention.
+# ----------------------------------------------------------------------
