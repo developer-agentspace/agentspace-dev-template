@@ -7,9 +7,8 @@
  * See skills/git-workflow.md for the full convention.
  *
  * The commit-msg hook in .husky/commit-msg runs this via commitlint.
- * Install: npm install -D @commitlint/cli @commitlint/config-conventional
  */
-export default {
+module.exports = {
   extends: ['@commitlint/config-conventional'],
   rules: {
     // Max 72 chars for subject line (matches git-workflow.md)
