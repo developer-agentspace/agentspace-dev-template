@@ -49,10 +49,12 @@ The deciding factors were team skill alignment (React experience compounds acros
 
 ### What we'll need to revisit
 - If a project specifically needs SSR-first or sub-100KB bundles, React may not be the right fit and we'd reopen this decision.
-- React 19 adoption will trigger a successor ADR.
+
+> **Update 2026-04-14:** React 19 has been adopted in the template. The `package.json` now has `react: ^19.2.4`. The migration was straightforward — no breaking changes in our usage. This ADR remains as the historical record of the original decision. The React 19 upgrade did not require a new ADR because it was a non-breaking minor-to-major that preserved all patterns documented here.
 
 ## References
 
 - CLAUDE.md Section 2 (Tech Stack)
 - skills/frontend.md
 - React 18 release notes: https://react.dev/blog/2022/03/29/react-v18
+- React 19 release notes: https://react.dev/blog/2024/12/05/react-19

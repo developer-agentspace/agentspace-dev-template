@@ -7,7 +7,7 @@ import tseslint from 'typescript-eslint'
 import { defineConfig, globalIgnores } from 'eslint/config'
 
 export default defineConfig([
-  globalIgnores(['dist']),
+  globalIgnores(['dist', 'coverage', 'storybook-static']),
   {
     files: ['**/*.{ts,tsx}'],
     extends: [
@@ -27,13 +27,22 @@ export default defineConfig([
         'error',
         { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
       ],
+      // The structured logger at src/lib/logger.ts is the only place where
+      // direct console.* calls are allowed. Everywhere else, use `logger`.
+      'no-console': 'error',
     },
   },
   {
-    // Exclude story files from tsc build (storybook has its own TS config)
+    // Allow console.* inside the logger implementation and its tests.
+    files: ['src/lib/logger.ts', 'src/lib/logger.test.ts'],
+    rules: {
+      'no-console': 'off',
+    },
+  },
+  {
+    // Exclude story files from strict checks (storybook deps may not be installed)
     files: ['**/*.stories.{ts,tsx}'],
     rules: {
-      // Stories import @storybook/react which may not be installed yet
       '@typescript-eslint/no-unused-vars': 'off',
     },
   },
