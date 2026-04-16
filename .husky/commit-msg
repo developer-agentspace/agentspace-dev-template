@@ -1,8 +1,16 @@
 # Enforce conventional commit format.
 # Install: npm install -D @commitlint/cli @commitlint/config-conventional
-# If commitlint is not installed, skip with a warning.
-if command -v npx &> /dev/null && [ -f "commitlint.config.js" ]; then
-  npx --no-install commitlint --edit "$1" 2>/dev/null || {
+#
+# Detection logic:
+#   - If commitlint binary is installed (resolvable by npx --no-install), run
+#     it and let its exit code determine whether the commit proceeds.
+#   - If it's NOT installed, skip with a warning (don't block dev workflow).
+
+if [ -f "commitlint.config.js" ] && command -v npx &> /dev/null; then
+  if npx --no-install commitlint --version &> /dev/null; then
+    # commitlint IS installed — run it and propagate its exit code.
+    npx --no-install commitlint --edit "$1"
+  else
     echo "⚠️  commitlint not installed — skipping format check. Run: npm install -D @commitlint/cli @commitlint/config-conventional"
-  }
+  fi
 fi
